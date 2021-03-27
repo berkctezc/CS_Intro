@@ -9,9 +9,12 @@ namespace OOP3
     class ApplicationManager
     {
         //her degeri alabilir
-        public void Apply(ICreditManager creditManager)
+        //Method Injection ------herhangi bir creditmanagerialır----herhangi bi loglayıcı alabilecek
+        public void Apply(ICreditManager creditManager,ILoggerService loggerService)
         {
             creditManager.Calculate();
+
+            loggerService.Log();
         }
 
         //herhangi adette gelebilir

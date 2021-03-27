@@ -18,9 +18,9 @@ namespace OOP3
 
 
             ApplicationManager applicationManager = new ApplicationManager();
-            applicationManager.Apply(residenceCreditManager);
-            applicationManager.Apply(carCreditManager);
-            applicationManager.Apply(personalCreditManager);
+            applicationManager.Apply(residenceCreditManager, new DatabaseLoggerService());
+            applicationManager.Apply(carCreditManager, new FileLoggerService());
+            applicationManager.Apply(personalCreditManager,new DatabaseLoggerService());
             Console.WriteLine("------");
 
             List<ICreditManager> credits = new List<ICreditManager>() {personalCreditManager,carCreditManager,residenceCreditManager,
