@@ -57,6 +57,13 @@ namespace LinqCalisma
                 Console.WriteLine(a.ProductName);
 
 
+            //sql benzeri sorgular calistirilabilir
+            var result6= from p in products
+                         where p.UnitPrice>6000
+                         orderby p.UnitPrice descending, p.ProductName ascending
+                         select p;
+            foreach (var a in result6)
+                Console.WriteLine(a.ProductName);
 
         }
 
