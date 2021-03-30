@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace LinqCalisma
 {
-    class Program
+    partial class Program
     {
         static void Main(string[] args)
         {
@@ -24,6 +24,7 @@ namespace LinqCalisma
            };
 
 
+
             //Bazı Linq Komutları
 
             //Where: şartları saglayan var mı? list dondurur
@@ -34,7 +35,7 @@ namespace LinqCalisma
             Console.WriteLine("*****");
 
             //Any: bu deger var mı? return bool
-            var result2= products.Any(p => p.ProductName == "Acer Laptop");
+            var result2 = products.Any(p => p.ProductName == "Acer Laptop");
             Console.WriteLine(result2);
 
             Console.WriteLine("*****");
@@ -52,18 +53,36 @@ namespace LinqCalisma
             Console.WriteLine("*****");
 
             //OrderBy:UnitPrice için sırala OrderBy:asc OrderByDescending:desc
-            var result5 = products.Where(p => p.ProductName.Contains("top")).OrderBy(p=>p.UnitPrice);
+            var result5 = products.Where(p => p.ProductName.Contains("top")).OrderBy(p => p.UnitPrice);
             foreach (var a in result5)
                 Console.WriteLine(a.ProductName);
 
+            Console.WriteLine("*****");
 
             //sql benzeri sorgular calistirilabilir
-            var result6= from p in products
-                         where p.UnitPrice>6000
-                         orderby p.UnitPrice descending, p.ProductName ascending
-                         select p;
+            //classic linq
+            var result6 = from p in products
+                          where p.UnitPrice > 6000
+                          orderby p.UnitPrice descending, p.ProductName ascending
+                          select new ProductDto { ProductId = p.ProductId, ProductName = p.ProductName, UnitPrice = p.UnitPrice };
             foreach (var a in result6)
                 Console.WriteLine(a.ProductName);
+
+            Console.WriteLine("*****");
+
+            //Joinler
+            var result7 = from p in products 
+                          join c in categories
+                          on p.CategoryId equals c.CategoryId
+                          where p.UnitPrice>5000
+                          orderby p.UnitPrice descending
+                          select new ProductDto {ProductId=p.ProductId,CategoryName=c.CategoryName,ProductName=p.ProductName,UnitPrice=p.UnitPrice };
+
+            foreach (var productDto in result7)
+            {
+                Console.WriteLine("{0} --- {1}", productDto.ProductName,productDto.CategoryName);
+            }
+
 
         }
 
